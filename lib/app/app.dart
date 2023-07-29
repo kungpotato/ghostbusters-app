@@ -1,28 +1,43 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:ghostbustersshop/theme/app_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+enum AppEnvironment { dev, stg, prod }
+
+class App extends StatefulWidget {
+  const App({required this.environment, this.adaptiveThemeMode, super.key});
+
+  final AppEnvironment environment;
+  final AdaptiveThemeMode? adaptiveThemeMode;
+
+  @override
+  State<App> createState() => _AppState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class _AppState extends State<App> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return AdaptiveTheme(
+      light: lightTheme,
+      dark: darkTheme,
+      initial: widget.adaptiveThemeMode ?? AdaptiveThemeMode.system,
+      builder: (light, dark) => MaterialApp(
+        title: 'My App',
+        theme: light,
+        darkTheme: dark,
+        onGenerateRoute: (settings) => MaterialPageRoute(
+            builder: (context) => const MyHomePage(
+                  title: 'my app',
+                )),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -42,7 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Center(
