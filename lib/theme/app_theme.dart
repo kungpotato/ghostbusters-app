@@ -10,7 +10,7 @@ final lightTheme = FlexThemeData.light(
     tertiary: Color(0xff007a58),
     tertiaryContainer: Color(0xffc3ffdd),
     appBarColor: Color(0xffe4ffdc),
-    error: Color(0xff00b020),
+    error: Color(0xffcf6679),
   ),
   surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
   blendLevel: 22,
